@@ -1,45 +1,59 @@
-# docs
+# CORE.DUMP
 
-This is a Next.js application generated with
-[Create Fumadocs](https://github.com/fuma-nama/fumadocs).
+A personal knowledge base — notes, deep dives, and brain debug logs across
+whatever I happen to be exploring. Built with [Next.js](https://nextjs.org) and
+[Fumadocs](https://fumadocs.dev).
 
-Run development server:
+## Development
 
 ```bash
-npm run dev
-# or
+pnpm install
 pnpm dev
-# or
-yarn dev
 ```
 
-Open http://localhost:3000 with your browser to see the result.
+Open <http://localhost:3000>.
 
-## Explore
+## Structure
 
-In the project, you can see:
+Docs are organized into root sections that appear in the sidebar tabs dropdown:
 
-- `lib/source.ts`: Code for content source adapter, [`loader()`](https://fumadocs.dev/docs/headless/source-api) provides the interface to access your content.
-- `lib/layout.shared.tsx`: Shared options for layouts, optional but preferred to keep.
+| Section       | Path                              | Folder                        |
+| ------------- | --------------------------------- | ----------------------------- |
+| General       | `/docs`, `/docs/test`             | `content/docs/(general)/`     |
+| LeetCode      | `/docs/leetcode/...`              | `content/docs/leetcode/`      |
+| System Design | `/docs/system-design/...`         | `content/docs/system-design/` |
 
-| Route                     | Description                                            |
-| ------------------------- | ------------------------------------------------------ |
-| `app/(home)`              | The route group for your landing page and other pages. |
-| `app/docs`                | The documentation layout and pages.                    |
-| `app/api/search/route.ts` | The Route Handler for search.                          |
+Each section folder has a `meta.json` with `"root": true` so its sidebar is
+isolated from the others. `(general)` is a folder group (parentheses) so its
+pages keep the top-level `/docs/...` URLs.
 
-### Fumadocs MDX
+To add a new section (e.g. Finance):
 
-A `source.config.ts` config file has been included, you can customise different options like frontmatter schema.
+1. Create `content/docs/finance/` with an `index.mdx` and a
+   `meta.json` containing `{ "title": "Finance", "root": true }`.
+2. Add the tab entry in [`src/app/docs/layout.tsx`](src/app/docs/layout.tsx).
+3. Add a card in [`src/app/(home)/page.tsx`](src/app/(home)/page.tsx).
 
-Read the [Introduction](https://fumadocs.dev/docs/mdx) for further details.
+## Key files
 
-## Learn More
+- [`src/lib/source.ts`](src/lib/source.ts) — Fumadocs content source loader.
+- [`src/lib/layout.shared.tsx`](src/lib/layout.shared.tsx) — Shared layout options.
+- [`src/lib/shared.ts`](src/lib/shared.ts) — App name and route constants.
+- [`src/app/docs/layout.tsx`](src/app/docs/layout.tsx) — Docs layout with tabs config.
+- [`source.config.ts`](source.config.ts) — Fumadocs MDX config.
 
-To learn more about Next.js and Fumadocs, take a look at the following
-resources:
+## Scripts
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js
-  features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-- [Fumadocs](https://fumadocs.dev) - learn about Fumadocs
+| Script             | Purpose                     |
+| ------------------ | --------------------------- |
+| `pnpm dev`         | Start the dev server.       |
+| `pnpm build`       | Build the static site.      |
+| `pnpm start`       | Serve the production build. |
+| `pnpm types:check` | Run typegen and `tsc`.      |
+| `pnpm lint`        | Run ESLint.                 |
+
+## References
+
+- [Next.js docs](https://nextjs.org/docs)
+- [Fumadocs docs](https://fumadocs.dev/docs)
+- [Page Conventions](https://fumadocs.dev/docs/page-conventions)
