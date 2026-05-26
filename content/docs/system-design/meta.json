@@ -1,5 +1,6 @@
 {
   "title": "System Design",
-  "description": "Architectures and trade-offs",
+  "description": "Architecture notes",
+  "icon": "Network",
   "root": true
 }

@@ -1,6 +1,7 @@
 @import 'tailwindcss';
 @import 'fumadocs-ui/css/neutral.css';
 @import 'fumadocs-ui/css/preset.css';
+@import 'katex/dist/katex.min.css';
 
 @theme inline {
   --font-sans: var(--font-sans);
@@ -15,4 +16,11 @@ html {
 html > body[data-scroll-locked] {
   margin-right: 0px !important;
   --removed-body-scroll-bar-size: 0px !important;
+}
+
+/* Shrink the sidebar root-toggle (tab) description text */
+[data-radix-popper-content-wrapper] p.text-fd-muted-foreground,
+#nd-sidebar p.text-fd-muted-foreground {
+  font-size: 12px !important;
+  line-height: 1.25;
 }

@@ -47,24 +47,25 @@ export default function HomePage() {
           </Link>
         </div>
 
-        <div className="grid w-full gap-4 sm:grid-cols-3">
+        <div className="grid w-full gap-3 sm:grid-cols-3">
           {sections.map(({ title, description, href, icon: Icon }) => (
             <Link
               key={href}
               href={href}
-              className="group flex flex-col gap-3 rounded-xl border border-fd-border bg-fd-card p-5 text-left transition-colors hover:border-fd-foreground/30 hover:bg-fd-muted/50"
+              className="group flex items-start gap-3 rounded-xl border border-fd-border bg-fd-card p-4 text-left transition-colors hover:border-fd-foreground/30 hover:bg-fd-muted/50"
             >
-              <div className="flex size-9 items-center justify-center rounded-lg border border-fd-border bg-fd-muted/40 text-fd-foreground">
+              <div className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-fd-border bg-fd-muted/40 text-fd-foreground">
                 <Icon className="size-4" />
               </div>
-              <div className="flex flex-col gap-1">
-                <h2 className="text-sm font-semibold">{title}</h2>
-                <p className="text-sm text-fd-muted-foreground">{description}</p>
+              <div className="flex min-w-0 flex-col gap-0.5">
+                <h2 className="flex items-center gap-1 text-sm font-semibold">
+                  {title}
+                  <ArrowRight className="size-3 -translate-x-0.5 text-fd-muted-foreground opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100" />
+                </h2>
+                <p className="text-xs leading-snug text-fd-muted-foreground">
+                  {description}
+                </p>
               </div>
-              <span className="mt-auto inline-flex items-center gap-1 text-xs font-medium text-fd-muted-foreground transition-colors group-hover:text-fd-foreground">
-                Explore
-                <ArrowRight className="size-3 transition-transform group-hover:translate-x-0.5" />
-              </span>
             </Link>
           ))}
         </div>
