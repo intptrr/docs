@@ -9,6 +9,72 @@
   --font-brand: var(--font-brand);
 }
 
+/* Default accent follows the neutral Fumadocs theme (matches fumadocs.dev:
+   near-black in light, near-white in dark). Only the hero glow is defined here;
+   per-section accents below override the default within their tab layout. */
+:root {
+  --hero-glow: hsl(0 0% 9% / 0.05); /* subtle neutral hero glow */
+}
+
+.dark {
+  --hero-glow: hsl(0 0% 100% / 0.08);
+}
+
+/* General tab keeps the original indigo brand accent. Tabs without an explicit
+   rule below (e.g. newly added ones) fall back to the neutral default. */
+:root {
+  --color-general: #6366f1; /* indigo-500 */
+  --color-general-foreground: #ffffff;
+}
+
+[data-section='general'] {
+  --color-fd-primary: var(--color-general);
+  --color-fd-primary-foreground: var(--color-general-foreground);
+  --color-fd-ring: var(--color-general);
+}
+
+.dark [data-section='general'] {
+  --color-fd-primary: #a5b4fc; /* indigo-300, lighter for dark-bg contrast */
+  --color-fd-primary-foreground: #1e1b4b; /* indigo-950 */
+  --color-fd-ring: #a5b4fc;
+}
+
+/* LeetCode brand accent — applied to the LeetCode section/tab layout */
+:root {
+  --color-leetcode: #ffa116; /* LeetCode brand yellow */
+  --color-leetcode-foreground: #1a1a1a;
+}
+
+[data-section='leetcode'] {
+  --color-fd-primary: var(--color-leetcode);
+  --color-fd-primary-foreground: var(--color-leetcode-foreground);
+  --color-fd-ring: var(--color-leetcode);
+}
+
+.dark [data-section='leetcode'] {
+  --color-fd-primary: #ffb84d; /* lighter for dark-bg contrast */
+  --color-fd-primary-foreground: #1a1a1a;
+  --color-fd-ring: #ffb84d;
+}
+
+/* System Design brand accent — applied to the System Design section/tab layout */
+:root {
+  --color-system-design: #3b82f6; /* blue-500 */
+  --color-system-design-foreground: #ffffff;
+}
+
+[data-section='system-design'] {
+  --color-fd-primary: var(--color-system-design);
+  --color-fd-primary-foreground: var(--color-system-design-foreground);
+  --color-fd-ring: var(--color-system-design);
+}
+
+.dark [data-section='system-design'] {
+  --color-fd-primary: #60a5fa; /* blue-400, lighter for dark-bg contrast */
+  --color-fd-primary-foreground: #0a1e3f;
+  --color-fd-ring: #60a5fa;
+}
+
 html {
   scrollbar-gutter: stable;
 }

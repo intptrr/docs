@@ -25,13 +25,17 @@ const sections = [
 
 export default function HomePage() {
   return (
-    <main className="flex flex-1 flex-col items-center justify-center px-6 py-20">
+    <main className="relative flex flex-1 flex-col items-center justify-center px-6 py-20">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(60%_50%_at_50%_0%,var(--hero-glow),transparent_70%)]"
+      />
       <div className="mx-auto flex w-full max-w-4xl flex-col items-center gap-12 text-center">
         <div className="flex flex-col items-center gap-4">
           <span className="rounded-full border border-fd-border bg-fd-muted/50 px-3 py-1 text-xs font-medium uppercase tracking-widest text-fd-muted-foreground">
             Personal knowledge base
           </span>
-          <h1 className="font-brand bg-gradient-to-br from-fd-foreground to-fd-muted-foreground bg-clip-text text-5xl font-bold tracking-tight text-transparent sm:text-7xl">
+          <h1 className="font-brand bg-gradient-to-br from-fd-foreground via-fd-foreground to-fd-muted-foreground bg-clip-text text-5xl font-bold tracking-tight text-transparent sm:text-7xl">
             {appName}
           </h1>
           <p className="max-w-xl text-balance text-base text-fd-muted-foreground sm:text-lg">
