@@ -90,3 +90,14 @@ html > body[data-scroll-locked] {
   font-size: 12px !important;
   line-height: 1.25;
 }
+
+/* Tighten the vertical rhythm between docs sections. Fumadocs' prose gives
+   `h2` a large top margin; reduce it (and the matching `h3`) so multi-section
+   pages like LeetCode solutions read more compactly. */
+.prose h2 {
+  margin-top: 1.5rem;
+}
+
+.prose h3 {
+  margin-top: 1rem;
+}

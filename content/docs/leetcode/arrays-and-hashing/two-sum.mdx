@@ -1,0 +1,77 @@
+---
+title: 1. Two Sum
+description: Find indices of two numbers that add up to a target.
+difficulty: Easy
+id: 1
+url: https://leetcode.com/problems/two-sum/
+tags:
+  - Array
+  - Hash Table
+---
+
+## Approach 1: Brute Force
+
+Check every pair `(i, j)` and return the first pair that sums to `target`.
+
+```python title="brute_force.py"
+class Solution:
+    def twoSum(self, nums: list[int], target: int) -> list[int]:
+        for i in range(len(nums)):
+            for j in range(i + 1, len(nums)):
+                if nums[i] + nums[j] == target:
+                    return [i, j]
+        return []
+```
+
+- **Time:** $O(n^2)$ — every pair is examined.
+- **Space:** $O(1)$ — no extra storage.
+
+## Approach 2: Two-Pass Hash Map
+
+Build a map from value to index, then for each number look up its complement
+`target - n` (skipping the element itself).
+
+```python title="two_pass.py"
+class Solution:
+    def twoSum(self, nums: list[int], target: int) -> list[int]:
+        index = {n: i for i, n in enumerate(nums)}
+        for i, n in enumerate(nums):
+            j = index.get(target - n)
+            if j is not None and j != i:
+                return [i, j]
+        return []
+```
+
+- **Time:** $O(n)$ — two linear passes.
+- **Space:** $O(n)$ — the value→index map.
+
+## Approach 3: One-Pass Hash Map
+
+Iterate once, storing each value's index as you go. For each number, check
+whether its complement has already been seen before inserting it — this avoids
+the self-use edge case entirely.
+
+```python title="one_pass.py"
+class Solution:
+    def twoSum(self, nums: list[int], target: int) -> list[int]:
+        seen: dict[int, int] = {}
+        for i, n in enumerate(nums):
+            if (j := seen.get(target - n)) is not None:
+                return [j, i]
+            seen[n] = i
+        return []
+```
+
+- **Time:** $O(n)$ — single pass over the array.
+- **Space:** $O(n)$ — the hash map of seen values.
+
+## Takeaway
+
+| Approach          | Time     | Space  |
+| ----------------- | -------- | ------ |
+| Brute Force       | $O(n^2)$ | $O(1)$ |
+| Two-Pass Hash Map | $O(n)$   | $O(n)$ |
+| One-Pass Hash Map | $O(n)$   | $O(n)$ |
+
+The **one-pass hash map** is optimal: it matches the best time complexity while
+making a single traversal and handling the duplicate-index case cleanly.

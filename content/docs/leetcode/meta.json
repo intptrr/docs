@@ -2,5 +2,6 @@
   "title": "Leetcode",
   "description": "Patterns & solutions",
   "icon": "Code",
-  "root": true
+  "root": true,
+  "pages": ["index", "...", "uncategorized"]
 }
