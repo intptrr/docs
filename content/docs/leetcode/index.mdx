@@ -1,6 +1,106 @@
 ---
-title: Leetcode
-description: Problem walkthroughs and patterns
+title: Overview
+description: Structure and frontmatter conventions for solutions.
 ---
 
-Welcome to the Leetcode section.
+This section collects problem walkthroughs grouped by pattern. The conventions
+below keep solutions consistent and the sidebar tidy.
+
+## Content structure
+
+Problems live in **pattern folders**. Anything you haven't
+categorized yet goes in **Inbox**, which is always pinned to the bottom of the
+sidebar.
+
+```text
+content/docs/leetcode/
+├── index.mdx                 # this page
+├── meta.json                 # section config + folder ordering
+├── arrays-and-hashing/       # a pattern folder
+│   ├── meta.json             # folder title + page ordering
+│   └── two-sum.mdx           # one file per problem
+└── inbox/                    # problems awaiting a pattern
+    ├── meta.json
+    └── three-sum.mdx
+```
+
+### File naming
+
+One `.mdx` file per problem, named with the **official LeetCode slug** in
+kebab-case — the last segment of the problem URL:
+
+```text
+https://leetcode.com/problems/two-sum/  ->  two-sum.mdx
+```
+
+The problem number belongs in the `title` (e.g. `1. Two Sum`), not the filename.
+
+## Frontmatter conventions
+
+Every solution starts with this frontmatter. Only `title` and `description` are
+required; the rest are optional and used to render the metadata badges at the
+top of the page.
+
+```yaml title="two-sum.mdx"
+---
+title: 1. Two Sum
+description: Find indices of two numbers that add up to a target.
+difficulty: Easy
+leetcodeId: 1
+url: https://leetcode.com/problems/two-sum/
+tags:
+  - Array
+  - Hash Table
+---
+```
+
+| Field        | Type                          | Required | Purpose                                       |
+| ------------ | ----------------------------- | -------- | --------------------------------------------- |
+| `title`      | string                        | Yes      | `<number>. <Name>`, e.g. `1. Two Sum`         |
+| `description`| string                        | Yes      | One-line summary of the problem               |
+| `difficulty` | `Easy` \| `Medium` \| `Hard`  | No       | Renders a colored difficulty badge            |
+| `id`         | integer                       | No       | Problem number, shown as a `#1` chip          |
+| `url`        | string                        | No       | Link to the problem; renders a "LeetCode" link|
+| `tags`       | string[]                      | No       | Pattern / topic chips, e.g. `Array`           |
+
+<Callout type="info">
+  Non-LeetCode pages simply omit the optional fields —
+  the schema treats them as optional, so nothing breaks.
+</Callout>
+
+## Ordering
+
+Sidebar order is controlled by `pages` in each `meta.json`.
+
+- **Section folders** — `leetcode/meta.json` uses the rest operator so new
+  pattern folders appear automatically and Inbox stays last:
+
+  ```json title="leetcode/meta.json"
+  { "pages": ["index", "...", "inbox"] }
+  ```
+
+- **Problems within a pattern** — list them explicitly to control order:
+
+  ```json title="arrays-and-hashing/meta.json"
+  { "title": "Arrays & Hashing", "pages": ["two-sum"] }
+  ```
+
+## Multiple approaches
+
+Keep every approach for a problem in **one file**. The metadata (difficulty,
+id, url, tags) describes the *problem*, so it shouldn't be duplicated across
+files. Use one `## Approach N: …` section per approach, each with its own
+intuition, code block, and complexity, then close with a comparison table.
+
+```text
+## Approach 1: Brute Force
+## Approach 2: One-Pass Hash Map
+## Takeaway   (comparison table + which is optimal)
+```
+
+## Inbox workflow
+
+When you don't yet know a problem's pattern, drop the file in `inbox/`. Once
+you've identified it, move the file into the matching pattern folder and add it
+to that folder's `meta.json` `pages` — the sidebar and URL update
+automatically.
