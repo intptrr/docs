@@ -1,0 +1,46 @@
+---
+title: 100. Same Tree
+description: Check if two binary trees are identical.
+difficulty: Easy
+id: 100
+url: https://leetcode.com/problems/same-tree/
+tags:
+  - Tree
+  - Depth-First Search
+  - Breadth-First Search
+---
+
+## Approach: Recursive Depth-First Search
+
+Two trees are the same if their roots have equal values and their left and right subtrees are respectively the same.
+
+Algorithm:
+1. Base case: If both nodes are None, return True.
+2. If one is None and the other is not, return False.
+3. If both nodes exist, check if their values are equal.
+4. Recursively check their left and right subtrees.
+
+<Tabs items={['Python']}>
+  <Tab value="Python">
+```python
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution:
+    def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
+        if not p and not q:
+            return True
+
+        if not p or not q or p.val != q.val:
+            return False
+
+        return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
+```
+  </Tab>
+</Tabs>
+- **Time:** $O(n)$ — two linear passes.
+- **Space:** $O(n)$ — the value→index map.
