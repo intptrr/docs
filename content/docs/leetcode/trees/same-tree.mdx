@@ -42,5 +42,7 @@ class Solution:
 ```
   </Tab>
 </Tabs>
-- **Time:** $O(n)$ — two linear passes.
-- **Space:** $O(n)$ — the value→index map.
+- **Time:** $O(n)$ — where $n$ is the number of nodes in the tree.
+- **Space:** $O(h)$ — the maximum depth of the tree.
+
+For the recursive solution, the space complexity is O(h) because of the call stack. When traversing down the tree, each recursive call is placed on the call stack until a leaf is reached.
