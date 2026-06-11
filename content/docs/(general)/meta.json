@@ -2,5 +2,6 @@
   "title": "General",
   "description": "Overview",
   "icon": "BookOpen",
-  "root": true
+  "root": true,
+  "pages": ["index", "resources", "..."]
 }
