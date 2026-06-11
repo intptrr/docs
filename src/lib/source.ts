@@ -1,13 +1,31 @@
 import { docs } from 'collections/server';
 import { loader } from 'fumadocs-core/source';
-import { lucideIconsPlugin } from 'fumadocs-core/source/lucide-icons';
+import { icons } from 'lucide-react';
+import { createElement } from 'react';
 import { docsContentRoute, docsImageRoute, docsRoute } from './shared';
+
+// Tint each section's icon with its accent so the section dropdown and sidebar
+// reinforce the per-section color system (see global.css). Any other icon keeps
+// the default foreground color.
+const sectionIconAccent: Record<string, string> = {
+  BookOpen: 'var(--color-general)',
+  Code: 'var(--color-leetcode)',
+  Network: 'var(--color-system-design)',
+};
+
+function resolveIcon(name: string | undefined) {
+  if (!name) return;
+  const Icon = icons[name as keyof typeof icons];
+  if (!Icon) return;
+  const color = sectionIconAccent[name];
+  return createElement(Icon, color ? { style: { color } } : undefined);
+}
 
 // See https://fumadocs.dev/docs/headless/source-api for more info
 export const source = loader({
   baseUrl: docsRoute,
   source: docs.toFumadocsSource(),
-  plugins: [lucideIconsPlugin()],
+  icon: resolveIcon,
 });
 
 export function getPageImage(page: (typeof source)['$inferPage']) {

@@ -8,18 +8,21 @@ const sections = [
     description: 'Overview, notes, and miscellaneous topics.',
     href: '/docs',
     icon: BookOpen,
+    accent: 'var(--color-general)',
   },
   {
     title: 'LeetCode',
     description: 'Problem walkthroughs, patterns, and solutions.',
     href: '/docs/leetcode',
     icon: Code,
+    accent: 'var(--color-leetcode)',
   },
   {
     title: 'System Design',
     description: 'Architectures, trade-offs, and case studies.',
     href: '/docs/system-design',
     icon: Network,
+    accent: 'var(--color-system-design)',
   },
 ];
 
@@ -52,13 +55,20 @@ export default function HomePage() {
         </div>
 
         <div className="grid w-full gap-3 sm:grid-cols-3">
-          {sections.map(({ title, description, href, icon: Icon }) => (
+          {sections.map(({ title, description, href, icon: Icon, accent }) => (
             <Link
               key={href}
               href={href}
               className="group flex items-start gap-3 rounded-xl border border-fd-border bg-fd-card p-4 text-left transition-colors hover:border-fd-foreground/30 hover:bg-fd-muted/50"
             >
-              <div className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-fd-border bg-fd-muted/40 text-fd-foreground">
+              <div
+                className="flex size-9 shrink-0 items-center justify-center rounded-lg border"
+                style={{
+                  color: accent,
+                  borderColor: `color-mix(in oklab, ${accent} 30%, transparent)`,
+                  backgroundColor: `color-mix(in oklab, ${accent} 12%, transparent)`,
+                }}
+              >
                 <Icon className="size-4" />
               </div>
               <div className="flex min-w-0 flex-col gap-0.5">
