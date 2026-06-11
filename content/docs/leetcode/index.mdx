@@ -8,9 +8,7 @@ below keep solutions consistent and the sidebar tidy.
 
 ## Content structure
 
-Problems live in **pattern folders**. Anything you haven't
-categorized yet goes in **Inbox**, which is always pinned to the bottom of the
-sidebar.
+Problems live in **pattern folders** grouped by the technique they exercise.
 
 ```text
 content/docs/leetcode/
@@ -19,9 +17,8 @@ content/docs/leetcode/
 ├── arrays-and-hashing/       # a pattern folder
 │   ├── meta.json             # folder title + page ordering
 │   └── two-sum.mdx           # one file per problem
-└── inbox/                    # problems awaiting a pattern
-    ├── meta.json
-    └── three-sum.mdx
+└── two-pointers/             # another pattern folder
+    └── meta.json
 ```
 
 ### File naming
@@ -73,10 +70,10 @@ tags:
 Sidebar order is controlled by `pages` in each `meta.json`.
 
 - **Section folders** — `leetcode/meta.json` uses the rest operator so new
-  pattern folders appear automatically and Inbox stays last:
+  pattern folders appear automatically after the overview:
 
   ```json title="leetcode/meta.json"
-  { "pages": ["index", "...", "inbox"] }
+  { "pages": ["index", "..."] }
   ```
 
 - **Problems within a pattern** — list them explicitly to control order:
@@ -98,9 +95,3 @@ intuition, code block, and complexity, then close with a comparison table.
 ## Takeaway   (comparison table + which is optimal)
 ```
 
-## Inbox workflow
-
-When you don't yet know a problem's pattern, drop the file in `inbox/`. Once
-you've identified it, move the file into the matching pattern folder and add it
-to that folder's `meta.json` `pages` — the sidebar and URL update
-automatically.
