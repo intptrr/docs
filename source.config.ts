@@ -14,6 +14,8 @@ const docsSchema = pageSchema.extend({
   id: z.number().int().positive().optional(),
   url: z.string().optional(),
   tags: z.array(z.string()).default([]),
+  // Drafts are excluded from production builds (see src/lib/source.ts).
+  draft: z.boolean().optional(),
 });
 
 export const docs = defineDocs({
