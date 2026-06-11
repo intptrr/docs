@@ -7,7 +7,7 @@ import rehypeKatex from 'rehype-katex';
 import { z } from 'zod';
 
 // Frontmatter schema shared by all docs. The fields are all
-// optional, so non-Leetcode pages simply omit them.
+// optional, so non-LeetCode pages simply omit them.
 // see https://fumadocs.dev/docs/mdx/collections
 const docsSchema = pageSchema.extend({
   difficulty: z.enum(['Easy', 'Medium', 'Hard']).optional(),
