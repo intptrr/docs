@@ -1,0 +1,50 @@
+---
+title: 101. Symmetric Tree
+description: Check if a binary tree is symmetric.
+difficulty: Easy
+id: 101
+url: https://leetcode.com/problems/symmetric-tree/
+tags:
+  - Tree
+  - Depth-First Search
+  - Breadth-First Search
+---
+
+## Approach: Recursive Depth-First Search
+
+A tree is symmetric if its left and right subtrees are mirror images. Two trees are mirrors when their roots match and each one's left subtree mirrors the other's right subtree.
+
+Algorithm:
+1. Similar to the "Same Tree" problem, we can use a recursive approach.
+2. The base case is when both nodes are None, return True.
+3. If one is None and the other is not, return False.
+4. If both nodes exist, check if their values are equal.
+5. Recursively check their left and right subtrees, but with the left subtree of one node compared to the right subtree of the other.
+
+<Tabs items={['Python']}>
+  <Tab value="Python">
+```python
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution:
+    def isSymmetric(self, root: Optional[TreeNode]) -> bool:
+        def isMirror(t1, t2):
+            if not t1 and not t2:
+                return True
+
+            if not t1 or not t2 or t1.val != t2.val:
+                return False
+
+            return isMirror(t1.left, t2.right) and isMirror(t1.right, t2.left)
+
+        return isMirror(root, root)
+```
+  </Tab>
+</Tabs>
+- **Time:** $O(n)$ — where $n$ is the number of nodes in the tree.
+- **Space:** $O(h)$ — the maximum depth of the tree.
