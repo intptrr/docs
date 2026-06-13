@@ -10,14 +10,15 @@
 }
 
 /* Default accent follows the neutral Fumadocs theme (matches fumadocs.dev:
-   near-black in light, near-white in dark). Only the hero glow is defined here;
-   per-section accents below override the default within their tab layout. */
+   near-black in light, near-white in dark). The hero glow is tinted with the
+   indigo brand accent (--color-general) for depth and brand cohesion; per-section
+   accents below override the default within their tab layout. */
 :root {
-  --hero-glow: hsl(0 0% 9% / 0.05); /* subtle neutral hero glow */
+  --hero-glow: hsl(243 75% 59% / 0.08); /* indigo brand glow */
 }
 
 .dark {
-  --hero-glow: hsl(0 0% 100% / 0.08);
+  --hero-glow: hsl(243 75% 70% / 0.14);
 }
 
 /* General tab keeps the original indigo brand accent. Tabs without an explicit

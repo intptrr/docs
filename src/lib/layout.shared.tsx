@@ -7,8 +7,13 @@ export function baseOptions(): BaseLayoutProps {
     nav: {
       title: (
         <span className="inline-flex items-center gap-2 font-brand text-base font-bold tracking-tight">
-          <MemoryStick className="size-5" aria-hidden="true" />
-          {appName}
+          <MemoryStick
+            className="size-5 text-[var(--color-general)]"
+            aria-hidden="true"
+          />
+          <span className="bg-gradient-to-r from-[var(--color-general)] to-fd-foreground bg-clip-text text-transparent">
+            {appName}
+          </span>
         </span>
       ),
     },

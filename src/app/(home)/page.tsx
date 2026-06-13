@@ -35,7 +35,11 @@ export default function HomePage() {
       />
       <div className="mx-auto flex w-full max-w-4xl flex-col items-center gap-12 text-center">
         <div className="flex flex-col items-center gap-4">
-          <span className="rounded-full border border-fd-border bg-fd-muted/50 px-3 py-1 text-xs font-medium uppercase tracking-widest text-fd-muted-foreground">
+          <span className="inline-flex items-center gap-2 rounded-full border border-fd-border bg-fd-muted/50 px-3 py-1 text-xs font-medium uppercase tracking-widest text-fd-muted-foreground">
+            <span
+              aria-hidden
+              className="size-1.5 rounded-full bg-[var(--color-general)]"
+            />
             Personal knowledge base
           </span>
           <h1 className="font-brand bg-gradient-to-br from-fd-foreground via-fd-foreground to-fd-muted-foreground bg-clip-text text-5xl font-bold tracking-tight text-transparent sm:text-7xl">
