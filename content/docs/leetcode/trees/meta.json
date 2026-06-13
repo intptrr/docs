@@ -1,6 +1,7 @@
 {
   "title": "Trees",
   "pages": [
-    "same-tree"
+    "same-tree",
+    "symmetric-tree"
   ]
 }

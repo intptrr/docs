@@ -21,23 +21,10 @@ function resolveIcon(name: string | undefined) {
   return createElement(Icon, color ? { style: { color } } : undefined);
 }
 
-// Drop `draft: true` pages from production; keep them visible in `next dev`.
-const includeDrafts = process.env.NODE_ENV !== 'production';
-
-const fumadocsSource = docs.toFumadocsSource();
-const filteredSource = includeDrafts
-  ? fumadocsSource
-  : {
-      ...fumadocsSource,
-      files: fumadocsSource.files.filter(
-        (file) => file.type !== 'page' || !file.data.draft,
-      ),
-    };
-
 // See https://fumadocs.dev/docs/headless/source-api for more info
 export const source = loader({
   baseUrl: docsRoute,
-  source: filteredSource,
+  source: docs.toFumadocsSource(),
   icon: resolveIcon,
 });
 
