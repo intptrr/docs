@@ -1,0 +1,64 @@
+---
+title: 102. Binary Tree Level Order Traversal
+description: Traverse a binary tree in level order.
+difficulty: Easy
+id: 102
+url: https://leetcode.com/problems/binary-tree-level-order-traversal/
+tags:
+  - Tree
+  - Breadth-First Search
+---
+
+## Approach: Breadth-First Search
+
+We can use a queue to perform a level-order traversal of the binary tree. At each level, we process all nodes at that level before moving to the next level.
+
+Algorithm:
+1. Initialize a queue with the root node.
+2. While the queue is not empty:
+   - Dequeue a node.
+   - Process the node (e.g., add its value to the result).
+   - Enqueue its left and right children (if they exist).
+3. Return the result.
+
+<Tabs items={['Python']}>
+  <Tab value="Python">
+```python
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+from collections import *
+
+class Solution:
+    def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+        if not root:
+            return []
+
+        qu = deque([root])
+
+        ans = []
+        while qu:
+            level_size = len(qu)
+            level = []
+
+            for _ in range(level_size):
+                node = qu.popleft()
+                level.append(node.val)
+
+                if node.left:
+                    qu.append(node.left)
+                if node.right:
+                    qu.append(node.right)
+
+            ans.append(level)
+
+        return ans
+```
+  </Tab>
+</Tabs>
+- **Time:** $O(n)$ — where $n$ is the number of nodes in the tree.
+- **Space:** $O(w)$ — the maximum width of the tree. The worst-case space complexity occurs when the tree is a complete binary tree, in which case the maximum width is $\frac{n}{2}$, where $n$ is the number of nodes in the tree.

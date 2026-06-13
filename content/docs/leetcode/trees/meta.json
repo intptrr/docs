@@ -2,6 +2,7 @@
   "title": "Trees",
   "pages": [
     "same-tree",
-    "symmetric-tree"
+    "symmetric-tree",
+    "binary-tree-level-order-traversal"
   ]
 }
