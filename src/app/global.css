@@ -101,3 +101,10 @@ html > body[data-scroll-locked] {
 .prose h3 {
   margin-top: 1rem;
 }
+
+/* Card titles manage their own spacing. Without this, the `.prose h3` rule
+   above adds a top margin to an icon-less card's title, making the gap above
+   it larger than below. */
+.prose [data-card] :is(h2, h3) {
+  margin-top: 0;
+}
