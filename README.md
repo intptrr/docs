@@ -34,6 +34,17 @@ To add a new section (e.g. Finance):
 2. Add the tab entry in [`src/app/docs/layout.tsx`](src/app/docs/layout.tsx).
 3. Add a card in [`src/app/(home)/page.tsx`](src/app/(home)/page.tsx).
 
+### Adding a LeetCode solution
+
+Use the template at
+[`templates/leetcode-problem.mdx`](templates/leetcode-problem.mdx) (kept outside
+`content/docs/` so it isn't published as a page):
+
+1. Copy it to `content/docs/leetcode/<category>/<problem-slug>.mdx`.
+2. Fill in the frontmatter and write-up, then delete the usage comment.
+3. Add the slug to that category's `meta.json` `pages` array.
+4. Run `pnpm types:check`.
+
 ## Key files
 
 - [`src/lib/source.ts`](src/lib/source.ts) — Fumadocs content source loader.
