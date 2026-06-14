@@ -20,6 +20,7 @@ export function baseOptions(): BaseLayoutProps {
     links: [
       {
         type: 'menu',
+        on: 'nav',
         text: 'Resources',
         items: [
           {
