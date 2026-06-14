@@ -1,0 +1,38 @@
+---
+title: 104. Maximum Depth of Binary Tree
+description: Given the root of a binary tree, return its maximum depth.
+difficulty: Easy
+id: 104
+url: https://leetcode.com/problems/maximum-depth-of-binary-tree/
+tags:
+  - Tree
+  - Depth-First Search
+---
+
+## Approach: Depth-First Search
+
+Use depth-first search to traverse the tree and calculate the maximum depth.
+
+Algorithm:
+1. If the root is None, return 0.
+2. Recursively calculate the maximum depth of the left and right subtrees.
+3. Return the maximum of the two depths plus 1.
+
+<Tabs items={['Python']}>
+  <Tab value="Python">
+```python
+class Solution:
+    def maxDepth(self, root: TreeNode) -> int:
+        if not root:
+            return 0
+
+        left_depth = self.maxDepth(root.left)
+        right_depth = self.maxDepth(root.right)
+
+        return max(left_depth, right_depth) + 1
+```
+  </Tab>
+</Tabs>
+
+- **Time:** $O(n)$ — where $n$ is the number of nodes in the tree, as we visit each node exactly once.
+- **Space:** $O(h)$ — where $h$ is the height of the tree, due to the recursive call stack.

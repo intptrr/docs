@@ -3,6 +3,7 @@
   "pages": [
     "same-tree",
     "symmetric-tree",
-    "binary-tree-level-order-traversal"
+    "binary-tree-level-order-traversal",
+    "maximum-depth-of-binary-tree"
   ]
 }
