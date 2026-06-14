@@ -1,5 +1,6 @@
 {
   "title": "Resources",
+  "defaultOpen": true,
   "pages": [
     "algorithms",
     "system-design"

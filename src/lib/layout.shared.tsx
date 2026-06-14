@@ -17,6 +17,22 @@ export function baseOptions(): BaseLayoutProps {
         </span>
       ),
     },
+    links: [
+      {
+        type: 'menu',
+        text: 'Resources',
+        items: [
+          {
+            text: 'Algorithms',
+            url: '/docs/resources/algorithms',
+          },
+          {
+            text: 'System Design',
+            url: '/docs/resources/system-design',
+          },
+        ],
+      },
+    ],
     githubUrl: `https://github.com/${gitConfig.user}/${gitConfig.repo}`,
   };
 }
