@@ -29,13 +29,7 @@ export default function Layout({ children }: LayoutProps<'/'>) {
       suppressHydrationWarning
     >
       <body className="flex flex-col min-h-screen font-sans">
-        <RootProvider
-          search={{
-            options: {
-              type: 'static',
-            },
-          }}
-        >
+        <RootProvider>
           {children}
         </RootProvider>
       </body>
