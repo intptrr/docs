@@ -1,0 +1,95 @@
+---
+title: 110. Balanced Binary Tree
+description: Check if a binary tree is balanced.
+difficulty: Easy
+id: 110
+url: https://leetcode.com/problems/balanced-binary-tree/
+tags:
+  - Tree
+  - Depth-First Search
+---
+
+## Approach 1: Depth-First Search (Naive)
+
+In the naive approach, we calculate the height of each subtree and check if the difference in heights is greater than 1. If it is, the tree is not balanced.
+
+<Tabs items={['Python']}>
+  <Tab value="Python">
+```python
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.left = left
+#         self.right = right
+#         self.val = val
+
+class Solution:
+    def isBalanced(self, root: Optional[TreeNode]) -> bool:
+        def getHeight(node):
+            if not node:
+                return 0
+
+            leftSub = getHeight(node.left)
+            rightSub = getHeight(node.right)
+
+            return 1 + max(leftSub, rightSub)
+
+        if not root:
+            return True
+
+        leftHeight = getHeight(root.left)
+        rightHeight = getHeight(root.right)
+
+        if abs(leftHeight - rightHeight) > 1:
+            return False
+
+        return self.isBalanced(root.left) and self.isBalanced(root.right)
+```
+  </Tab>
+</Tabs>
+
+## Approach 2: Depth-First Search (Bottom-Up)
+
+This approach uses a bottom-up depth-first search to calculate the height of each subtree and check if it is balanced. The key idea is to compute the height while checking balance simultaneously, return early if an unbalanced subtree is found. This allows early termination.
+
+Algorithm:
+1. Check the height of the left and right subtrees.
+2. If the height difference is greater than 1, the tree is not balanced.
+3. Otherwise, the tree is balanced.
+
+<Tabs items={['Python']}>
+  <Tab value="Python">
+```python
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.left = left
+#         self.right = right
+#         self.val = val
+
+class Solution:
+    def isBalanced(self, root: Optional[TreeNode]) -> bool:
+        def checkHeight(node):
+            if not node:
+                return 0
+
+            leftSub = checkHeight(node.left)
+            if leftSub == -1:
+                return -1
+
+            rightSub = checkHeight(node.right)
+            if rightSub == -1:
+                return -1
+
+            if abs(rightSub-leftSub) > 1:
+                return -1
+
+            return 1 + max(leftSub, rightSub)
+
+        return checkHeight(root) != -1
+```
+  </Tab>
+</Tabs>
+
+- **Time:** $O(n)$ — where $n$ is the number of nodes in the tree.
+- **Space:** $O(h)$ — where $h$ is the height of the tree.

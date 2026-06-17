@@ -4,6 +4,7 @@
     "same-tree",
     "symmetric-tree",
     "binary-tree-level-order-traversal",
-    "maximum-depth-of-binary-tree"
+    "maximum-depth-of-binary-tree",
+    "balanced-binary-tree"
   ]
 }
