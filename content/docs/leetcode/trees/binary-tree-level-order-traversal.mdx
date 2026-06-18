@@ -6,10 +6,10 @@ id: 102
 url: https://leetcode.com/problems/binary-tree-level-order-traversal/
 tags:
   - Tree
-  - Breadth-First Search
+  - BFS
 ---
 
-## Approach: Breadth-First Search
+## Approach: BFS
 
 We can use a queue to perform a level-order traversal of the binary tree. At each level, we process all nodes at that level before moving to the next level.
 
@@ -60,5 +60,6 @@ class Solution:
 ```
   </Tab>
 </Tabs>
+
 - **Time:** $O(n)$ — where $n$ is the number of nodes in the tree.
 - **Space:** $O(w)$ — the maximum width of the tree. The worst-case space complexity occurs when the tree is a complete binary tree, in which case the maximum width is $\frac{n}{2}$, where $n$ is the number of nodes in the tree.

@@ -6,12 +6,12 @@ id: 110
 url: https://leetcode.com/problems/balanced-binary-tree/
 tags:
   - Tree
-  - Depth-First Search
+  - DFS
 ---
 
-## Approach 1: Depth-First Search (Naive)
+## Approach 1: DFS (Naive)
 
-In the naive approach, we calculate the height of each subtree and check if the difference in heights is greater than 1. If it is, the tree is not balanced.
+In the naive approach, we calculate the height of each subtree and check if the difference in heights is greater than 1. If it is, the tree is not balanced. Recursive calls are made for each subtree.
 
 <Tabs items={['Python']}>
   <Tab value="Python">
@@ -48,7 +48,10 @@ class Solution:
   </Tab>
 </Tabs>
 
-## Approach 2: Depth-First Search (Bottom-Up)
+- **Time:** $O(n^2)$ — where $n$ is the number of nodes in the tree.
+- **Space:** $O(h)$ — where $h$ is the height of the tree.
+
+## Approach 2: DFS (Bottom-Up)
 
 This approach uses a bottom-up depth-first search to calculate the height of each subtree and check if it is balanced. The key idea is to compute the height while checking balance simultaneously, return early if an unbalanced subtree is found. This allows early termination.
 
