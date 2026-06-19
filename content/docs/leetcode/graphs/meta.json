@@ -1,3 +1,6 @@
 {
-  "title": "Graphs"
+  "title": "Graphs",
+  "pages": [
+    "number-of-islands"
+  ]
 }
