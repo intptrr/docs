@@ -1,3 +1,6 @@
 {
-  "title": "Heap"
+  "title": "Heap",
+  "pages": [
+    "top-k-frequent-elements"
+  ]
 }
