@@ -1,0 +1,51 @@
+---
+title: 39. Combination Sum
+description: Given a set of candidate numbers and a target number, find all unique combinations in the set that sum to the target.
+difficulty: Medium
+id: 39
+url: https://leetcode.com/problems/combination-sum/
+tags:
+  - Backtracking
+---
+
+## Approach: Backtracking
+
+Algorithm:
+1. Initialize an empty list to store the result.
+2. Define a recursive function that takes the current index, remaining target, and the current path.
+3. If the remaining target is 0, add the current path to the result.
+4. If the remaining target is negative, return.
+5. Iterate through the candidates starting from the current index.
+6. Add each candidate to the current path and recursively call the function with updated parameters.
+7. Remove the last added candidate from the path (backtrack).
+8. Return the result.
+
+<Tabs items={['Python']}>
+  <Tab value="Python">
+```python
+class Solution:
+    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+        ans = []
+
+        def backtracking(start, target, path):
+            if target == 0:
+                ans.append(list(path))
+                return
+
+            if target < 0:
+                return
+
+            for i in range(start, len(candidates)):
+                path.append(candidates[i])
+                backtracking(i, target-candidates[i], path)
+                path.pop()
+
+        backtracking(0, target, [])
+
+        return ans
+```
+  </Tab>
+</Tabs>
+
+- **Time:** $O(n^{target/min(candidates)})$ — In the worst case, we might have to explore all possible combinations.
+- **Space:** $O(target)$ — The maximum depth of the recursion tree is the target value.
