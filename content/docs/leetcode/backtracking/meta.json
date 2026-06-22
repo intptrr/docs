@@ -2,6 +2,7 @@
   "title": "Backtracking",
   "pages": [
     "combination-sum",
-    "permutations"
+    "permutations",
+    "permutations-ii"
   ]
 }
