@@ -1,6 +1,7 @@
 {
   "title": "Backtracking",
   "pages": [
-    "combination-sum"
+    "combination-sum",
+    "permutations"
   ]
 }

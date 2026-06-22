@@ -1,0 +1,51 @@
+---
+title: 46. Permutations
+description: Given a collection of distinct integers, return all possible permutations.
+difficulty: Medium
+id: 46
+url: https://leetcode.com/problems/permutations/
+tags:
+  - Backtracking
+---
+
+## Approach: Backtracking
+
+Algorithm:
+1. Initialize an empty list to store the result.
+2. Use a boolean array to keep track of which elements have been used.
+3. Implement a backtracking function that builds permutations one element at a time.
+4. When the current permutation reaches the same length as the input, add it to the result.
+5. Return the list of all permutations.
+
+<Tabs items={['Python']}>
+  <Tab value="Python">
+```python
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        ans = []
+        used = [False] * len(nums)
+
+        def backtracking(path):
+            if len(path) == len(nums):
+                ans.append(list(path))
+                return
+
+            for i in range(len(nums)):
+                if used[i]:
+                    continue
+
+                path.append(nums[i])
+                used[i] = True
+                backtracking(path)
+                path.pop()
+                used[i] = False
+
+        backtracking([])
+
+        return ans
+```
+  </Tab>
+</Tabs>
+
+- **Time:** $O(n! \times n)$ — There are $n!$ permutations, and each permutation takes $O(n)$ time to construct.
+- **Space:** $O(n)$ — The maximum depth of the recursion tree is $n$, and each recursive call uses $O(1)$ space.
