@@ -1,0 +1,40 @@
+---
+title: 704. Binary Search
+description: Given a sorted array of integers, find the index of a target value using binary search.
+difficulty: Easy
+id: 704
+url: https://leetcode.com/problems/binary-search/
+tags:
+  - Binary Search
+---
+
+## Approach: Binary Search (Lower Bound)
+
+Algorithm:
+* left is inclusive, right is exclusive
+* Loop condition: while (left < right)
+    * left = mid + 1 when discarding left half
+    * right = mid when discarding right half
+
+<Tabs items={['Python']}>
+  <Tab value="Python">
+```python
+class Solution:
+    def search(self, nums: List[int], target: int) -> int:
+        left = 0
+        right = len(nums)
+
+        while left < right:
+            mid = (left+right)//2
+            if nums[mid] < target:
+                left = mid + 1
+            else:
+                right = mid
+
+        return left if left < len(nums) and nums[left] == target else -1
+```
+  </Tab>
+</Tabs>
+
+- **Time:** $O(\log n)$ — because we divide the search space in half with each iteration.
+- **Space:** $O(1)$ — while using only a constant amount of extra space.
