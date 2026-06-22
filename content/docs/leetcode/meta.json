@@ -3,5 +3,5 @@
   "description": "Patterns & solutions",
   "icon": "Code",
   "root": true,
-  "pages": ["index", "..."]
+  "pages": ["index", "problems", "..."]
 }

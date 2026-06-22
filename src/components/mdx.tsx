@@ -2,11 +2,13 @@ import defaultMdxComponents from 'fumadocs-ui/mdx';
 import * as TabsComponents from 'fumadocs-ui/components/tabs';
 import type { MDXComponents } from 'mdx/types';
 import { Mermaid } from './mermaid';
+import { ProblemsTable } from './problems-table';
 
 export function getMDXComponents(components?: MDXComponents) {
   return {
     ...defaultMdxComponents,
     Mermaid,
+    ProblemsTable,
     ...TabsComponents,
     ...components,
   } satisfies MDXComponents;
