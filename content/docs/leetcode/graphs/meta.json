@@ -1,6 +1,7 @@
 {
   "title": "Graphs",
   "pages": [
-    "number-of-islands"
+    "number-of-islands",
+    "max-area-of-island"
   ]
 }
