@@ -1,0 +1,70 @@
+---
+title: 207. Course Schedule
+description: Determine if it is possible to finish all courses given their prerequisites.
+difficulty: Medium
+id: 207
+url: https://leetcode.com/problems/course-schedule/
+tags:
+  - Graph
+  - BFS
+  - Topological Sort
+---
+
+## Approach: Topological Sort
+
+* in-degree: In a directed graph, the in-degree of a node is the number of edges pointing into that node.
+* out-degree: In a directed graph, the out-degree of a node is the number of edges going out from that node — in other words, how many other nodes it points to.
+* DAG, Directed Acyclic Graph (有向无环图)
+
+We build a graph and perform topological sort to process all courses. If there is no cycle detected, return true. Otherwise, return false.
+
+Example:
+```
+[ai, bi]  // to take course ai, you must first take course bi
+
+// ai depends on bi, so the graph looks like
+bi --> ai  // inDegree[ai] = 1
+
+// inDegree[x] = the number of prerequisites for course x.
+// in graph terms, it’s the number of incoming edges to node x.
+
+// means: from course b, you can go to course a
+graph[bi].push_back(ai);
+```
+* Build an adjacency list graph, and an inDegree array to track the number of prerequisites for each course.
+* Start with courses that have no prerequisites (inDegree == 0)
+* Use BFS to process those courses, reducing the inDegree of dependent courses.
+* If we can process all courses → no cycle → return true.
+
+<Tabs items={['Python']}>
+  <Tab value="Python">
+```python
+from collections import defaultdict, deque
+
+class Solution:
+    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+        graph = defaultdict(list)
+        indegree = [0] * numCourses
+
+        for course, prereq in prerequisites:
+            graph[prereq].append(course)
+            indegree[course] += 1
+
+        qu = deque([c for c in range(numCourses) if indegree[c] == 0])
+        visited = 0
+
+        while qu:
+            node = qu.popleft()
+            visited += 1
+            for neighbor in graph[node]:
+                indegree[neighbor] -= 1
+                if indegree[neighbor] == 0:
+                    qu.append(neighbor)
+
+        return visited == numCourses
+```
+  </Tab>
+</Tabs>
+
+- **Time:** $O(V + E)$ — where $V$ is the number of courses and $E$ is the number of prerequisites.
+- **Space:** $O(V + E)$ — for the graph and in-degree array.

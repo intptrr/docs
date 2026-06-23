@@ -2,6 +2,7 @@
   "title": "Graphs",
   "pages": [
     "number-of-islands",
-    "max-area-of-island"
+    "max-area-of-island",
+    "course-schedule"
   ]
 }
