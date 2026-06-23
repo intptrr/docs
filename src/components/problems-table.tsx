@@ -34,16 +34,26 @@ function buildCategoryMap(root: Root): Map<string, string> {
 /**
  * Build-time table of every LeetCode problem, sourced from page frontmatter.
  * New problems appear automatically once their page has an `id`.
+ *
+ * Pass `category` (a pattern folder slug, e.g. "trees") to scope the table to a
+ * single category; the redundant Category column is hidden in that case.
  */
-export function ProblemsTable() {
+export function ProblemsTable({ category }: { category?: string }) {
   const categories = buildCategoryMap(source.pageTree as Root);
 
   const problems = source
     .getPages()
-    .filter((page) => page.slugs[0] === 'leetcode' && typeof page.data.id === 'number')
+    .filter(
+      (page) =>
+        page.slugs[0] === 'leetcode' &&
+        typeof page.data.id === 'number' &&
+        (category === undefined || page.slugs[1] === category),
+    )
     .sort((a, b) => (a.data.id ?? 0) - (b.data.id ?? 0));
 
   if (problems.length === 0) return null;
+
+  const showCategory = category === undefined;
 
   return (
     <div className="not-prose my-6 overflow-x-auto rounded-lg border border-fd-border">
@@ -53,7 +63,9 @@ export function ProblemsTable() {
             <th className="px-4 py-2.5 font-medium text-fd-muted-foreground">#</th>
             <th className="px-4 py-2.5 font-medium text-fd-muted-foreground">Problem</th>
             <th className="px-4 py-2.5 font-medium text-fd-muted-foreground">Difficulty</th>
-            <th className="px-4 py-2.5 font-medium text-fd-muted-foreground">Category</th>
+            {showCategory ? (
+              <th className="px-4 py-2.5 font-medium text-fd-muted-foreground">Category</th>
+            ) : null}
             <th className="px-4 py-2.5 font-medium text-fd-muted-foreground">Tags</th>
           </tr>
         </thead>
@@ -86,9 +98,11 @@ export function ProblemsTable() {
                     </span>
                   ) : null}
                 </td>
-                <td className="px-4 py-2.5 text-fd-muted-foreground">
-                  {categories.get(page.url)}
-                </td>
+                {showCategory ? (
+                  <td className="px-4 py-2.5 text-fd-muted-foreground">
+                    {categories.get(page.url)}
+                  </td>
+                ) : null}
                 <td className="px-4 py-2.5">
                   <div className="flex flex-wrap gap-1.5">
                     {tags?.map((tag) => (
