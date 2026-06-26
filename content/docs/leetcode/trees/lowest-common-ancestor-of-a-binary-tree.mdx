@@ -1,0 +1,83 @@
+---
+title: 236. Lowest Common Ancestor of a Binary Tree
+description: Find the lowest common ancestor of two nodes in a binary tree.
+difficulty: Medium
+id: 236
+url: https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/
+tags:
+  - Tree
+  - Binary Tree
+  - DFS
+---
+
+## Approach: DFS
+
+```
+        3
+       / \
+      5   1
+     / \ / \
+    6  2 0  8
+      / \
+     7   4
+```
+
+Walk through an example if p = 6, q = 1
+
+```
+CALL: lowestCommonAncestor(3, 6, 1)
+│
+├── CALL: lowestCommonAncestor(5, 6, 1)
+│   │
+│   ├── CALL: lowestCommonAncestor(6, 6, 1)
+│   │   └── MATCH: root == p → RETURN 6
+│   │
+│   └── CALL: lowestCommonAncestor(2, 6, 1)
+│       ├── CALL: lowestCommonAncestor(7, 6, 1)
+│       │   └── root == null → RETURN nullptr
+│       └── CALL: lowestCommonAncestor(4, 6, 1)
+│           └── root == null → RETURN nullptr
+│       └── RETURN nullptr
+│
+│   └── RETURN 6
+│
+├── CALL: lowestCommonAncestor(1, 6, 1)
+│   └── MATCH: root == q → RETURN 1
+│
+└── RESULT: left = 6, right = 1 → RETURN 3
+```
+
+For any node root, there are three cases:
+1. If root == p or root == q, return root
+2. Recursively find LCA in the left and right subtrees
+3. If both left and right return non-null, current root is the LCA
+4. If only one side returns non-null, that means both p and q are in that subtree → return that result
+
+<Tabs items={['Python']}>
+  <Tab value="Python">
+```python
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#       self.value = value
+#       self.left = left
+#       self.right = right
+
+class Solution:
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        if not root or root == p or root == q:
+            return root
+
+        left = self.lowestCommonAncestor(root.left, p, q)
+        right = self.lowestCommonAncestor(root.right, p, q)
+
+        if left and right:
+            return root
+
+        return left if left else right
+```
+  </Tab>
+</Tabs>
+
+- **Time:** $O(n)$ — in the worst case, we might have to visit all nodes in the tree.
+- **Space:** $O(h)$ — where $h$ is the height of the tree, due to the recursive call stack.

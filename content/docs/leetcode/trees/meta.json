@@ -5,6 +5,7 @@
     "symmetric-tree",
     "binary-tree-level-order-traversal",
     "maximum-depth-of-binary-tree",
-    "balanced-binary-tree"
+    "balanced-binary-tree",
+    "lowest-common-ancestor-of-a-binary-tree"
   ]
 }
