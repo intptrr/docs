@@ -1,16 +1,6 @@
-import Link from 'fumadocs-core/link';
 import { source } from '@/lib/source';
-import { cn } from '@/lib/cn';
 import type { Node, Root } from 'fumadocs-core/page-tree';
-
-const difficultyStyles: Record<string, string> = {
-  Easy: 'border-emerald-600/30 bg-emerald-600/10 text-emerald-700 dark:text-emerald-400',
-  Medium:
-    'border-amber-600/30 bg-amber-600/10 text-amber-700 dark:text-amber-400',
-  Hard: 'border-rose-600/30 bg-rose-600/10 text-rose-700 dark:text-rose-400',
-};
-
-const difficultyOrder: Record<string, number> = { Easy: 0, Medium: 1, Hard: 2 };
+import { ProblemsDataTable, type Problem } from './problems-data-table';
 
 /** Map every page URL to the title of its nearest enclosing folder. */
 function buildCategoryMap(root: Root): Map<string, string> {
@@ -32,16 +22,17 @@ function buildCategoryMap(root: Root): Map<string, string> {
 }
 
 /**
- * Build-time table of every LeetCode problem, sourced from page frontmatter.
- * New problems appear automatically once their page has an `id`.
+ * Build-time data source for the LeetCode problems table. Collects problem
+ * metadata from page frontmatter and hands it to a client table (TanStack
+ * Table) for sorting, searching, and filtering.
  *
  * Pass `category` (a pattern folder slug, e.g. "trees") to scope the table to a
- * single category; the redundant Category column is hidden in that case.
+ * single category; the redundant Category column/filter is hidden in that case.
  */
 export function ProblemsTable({ category }: { category?: string }) {
   const categories = buildCategoryMap(source.pageTree as Root);
 
-  const problems = source
+  const problems: Problem[] = source
     .getPages()
     .filter(
       (page) =>
@@ -49,77 +40,20 @@ export function ProblemsTable({ category }: { category?: string }) {
         typeof page.data.id === 'number' &&
         (category === undefined || page.slugs[1] === category),
     )
-    .sort((a, b) => (a.data.id ?? 0) - (b.data.id ?? 0));
+    .map((page) => ({
+      id: page.data.id as number,
+      // Strip the leading "<id>. " so the table's # column isn't duplicated.
+      name: page.data.title.replace(/^\d+\.\s*/, ''),
+      url: page.url,
+      difficulty: page.data.difficulty,
+      category: categories.get(page.url) ?? 'LeetCode',
+      tags: page.data.tags ?? [],
+    }))
+    .sort((a, b) => a.id - b.id);
 
   if (problems.length === 0) return null;
 
-  const showCategory = category === undefined;
-
   return (
-    <div className="not-prose my-6 overflow-x-auto rounded-lg border border-fd-border">
-      <table className="w-full border-collapse text-sm">
-        <thead>
-          <tr className="border-b border-fd-border bg-fd-muted/50 text-left">
-            <th className="px-4 py-2.5 font-medium text-fd-muted-foreground">#</th>
-            <th className="px-4 py-2.5 font-medium text-fd-muted-foreground">Problem</th>
-            <th className="px-4 py-2.5 font-medium text-fd-muted-foreground">Difficulty</th>
-            {showCategory ? (
-              <th className="px-4 py-2.5 font-medium text-fd-muted-foreground">Category</th>
-            ) : null}
-            <th className="px-4 py-2.5 font-medium text-fd-muted-foreground">Tags</th>
-          </tr>
-        </thead>
-        <tbody>
-          {problems.map((page) => {
-            const { id, difficulty, tags, title } = page.data;
-            // Strip the leading "<id>. " so the table's # column isn't duplicated.
-            const name = title.replace(/^\d+\.\s*/, '');
-
-            return (
-              <tr
-                key={page.url}
-                className="border-b border-fd-border/60 last:border-0 hover:bg-fd-muted/30"
-              >
-                <td className="px-4 py-2.5 tabular-nums text-fd-muted-foreground">{id}</td>
-                <td className="px-4 py-2.5">
-                  <Link href={page.url} className="font-medium text-fd-foreground hover:text-fd-primary">
-                    {name}
-                  </Link>
-                </td>
-                <td className="px-4 py-2.5">
-                  {difficulty ? (
-                    <span
-                      className={cn(
-                        'inline-block rounded-full border px-2.5 py-0.5 text-xs font-medium',
-                        difficultyStyles[difficulty],
-                      )}
-                    >
-                      {difficulty}
-                    </span>
-                  ) : null}
-                </td>
-                {showCategory ? (
-                  <td className="px-4 py-2.5 text-fd-muted-foreground">
-                    {categories.get(page.url)}
-                  </td>
-                ) : null}
-                <td className="px-4 py-2.5">
-                  <div className="flex flex-wrap gap-1.5">
-                    {tags?.map((tag) => (
-                      <span
-                        key={tag}
-                        className="rounded-full border border-fd-border px-2 py-0.5 text-xs text-fd-muted-foreground"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
+    <ProblemsDataTable data={problems} showCategory={category === undefined} />
   );
 }
