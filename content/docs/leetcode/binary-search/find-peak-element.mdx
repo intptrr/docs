@@ -1,0 +1,40 @@
+---
+title: 162. Find Peak Element
+description: A peak element is an element that is strictly greater than its neighbors. Find a peak element in an array.
+difficulty: Medium
+id: 162
+url: https://leetcode.com/problems/find-peak-element/
+tags:
+  - Binary Search
+---
+
+## Approach: Binary Search
+
+Key idea: compare nums[mid] with its right neighbor nums[mid+1].
+
+* If nums[mid] < nums[mid+1], a peak must exist to the right (the slope is going up)
+* Otherwise, a peak lies to the left or at mid (the slope is going down)
+
+Note that we set right = len(nums)-1, because the code explicitly looks at mid + 1, we have to make sure mid + 1 never hits an index that doesn't exist.
+
+<Tabs items={['Python']}>
+  <Tab value="Python">
+```python
+class Solution:
+    def findPeakElement(self, nums: List[int]) -> int:
+        left, right= 0, len(nums)-1
+
+        while left < right:
+            mid = (left+right)//2
+            if nums[mid] > nums[mid+1]:
+                right = mid
+            else:
+                left = mid + 1
+
+        return left
+```
+  </Tab>
+</Tabs>
+
+- **Time:** $O(\log n)$ — we perform a binary search, reducing the search space by half in each iteration.
+- **Space:** $O(1)$ — we only use a constant amount of extra space.
