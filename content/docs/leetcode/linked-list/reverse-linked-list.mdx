@@ -1,0 +1,62 @@
+---
+title: 206. Reverse Linked List
+description: Reverse a singly linked list.
+difficulty: Easy
+id: 206
+url: https://leetcode.com/problems/reverse-linked-list/
+tags:
+  - Linked List
+---
+
+## Approach: Linked List (The Three-Pointer Technique)
+
+We use three pointers to reverse the linked list: `prev`, `curr`, and `temp`. We iterate through the list, updating the `next` pointer of each node to point to its previous node:
+
+* Prev (prev): Keep track of the previous node
+* Curr: Keep track of the current node
+* Next (temp): Keep track of the next node
+
+Iterate through the current node in linked list:
+
+1. Store the next node into the temp
+2. Reverse: Update the next to point to previous node
+3. Update the position for previous node and current node
+
+```
+null -> 1 -> 2 -> 3
+prev   curr
+
+curr->next = null
+then move prev and curr, prev will always be head
+```
+
+<Tabs items={['Python']}>
+  <Tab value="Python">
+```python
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        if not head:
+            return head
+
+        prev = None
+        curr = head
+
+        while curr:
+            temp = curr.next
+            curr.next = prev
+            prev = curr
+            curr = temp
+
+        return prev
+```
+  </Tab>
+</Tabs>
+
+- **Time:** $O(n)$ — we visit each node exactly once.
+- **Space:** $O(1)$ — we only use a constant amount of extra space.

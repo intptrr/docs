@@ -1,3 +1,6 @@
 {
-  "title": "Linked List"
+  "title": "Linked List",
+  "pages": [
+    "reverse-linked-list"
+  ]
 }
