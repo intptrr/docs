@@ -1,0 +1,68 @@
+---
+title: 994. Rotting Oranges
+description: You are given an m x n grid where each cell can have one of three values: 0 representing an empty cell, 1 representing a fresh orange, or 2 representing a rotten orange. Every minute, any fresh orange that is 4-directionally adjacent to a rotten orange becomes rotten. Return the minimum number of minutes that must pass until all oranges are rotten. If it's impossible, return -1.
+difficulty: Medium
+id: 994
+url: https://leetcode.com/problems/rotting-oranges/
+tags:
+  - BFS
+  - Graph
+---
+
+## Approach: Multi-Source BFS
+
+We start with all the rotten oranges in the queue and perform a multi-source BFS. This allows us to simulate the rotting process in parallel, ensuring that we find the minimum time required for all fresh oranges to become rotten.
+
+*	Put all initially rotten oranges (value=2) into a queue
+* Count fresh oranges
+* BFS outward in 4 dirs; when a fresh orange is reached, rot it, decrement fresh count, and enqueue
+    * Mark rotted = true to indicate that some rotting happened this minute
+    * After processing a level (minute), if rotted == true, increment time
+* If any fresh remain at the end, return -1. Otherwise, return times
+
+<Tabs items={['Python']}>
+  <Tab value="Python">
+```python
+from collections import deque
+
+class Solution:
+    def orangesRotting(self, grid: List[List[int]]) -> int:
+        if not grid:
+            return 0
+
+        rows, cols = len(grid), len(grid[0])
+        qu = deque()
+        fresh = 0
+
+        for r in range(rows):
+            for c in range(cols):
+                if grid[r][c] == 2:
+                    qu.append((r, c))
+                elif grid[r][c] == 1:
+                    fresh += 1
+
+        minutes = 0
+        dirs = [[1, 0], [-1, 0], [0, 1], [0, -1]]
+
+        while qu and fresh > 0:
+            minutes += 1
+
+            for _ in range(len(qu)):
+                r, c = qu.popleft()
+
+                for dr, dc in dirs:
+                    nr, nc = r+dr, c+dc
+
+                    if (0 <= nr < rows and 0 <= nc < cols
+                        and grid[nr][nc] == 1):
+                        grid[nr][nc] = 2
+                        fresh -= 1
+                        qu.append((nr, nc))
+
+        return minutes if fresh == 0 else -1
+```
+  </Tab>
+</Tabs>
+
+- **Time:** $O(m \times n)$ — where $m$ is the number of rows and $n$ is the number of columns. In the worst case, we might have to process all cells in the grid.
+- **Space:** $O(m \times n)$ — in the worst case, all cells could be rotten, so the queue could contain all cells.

@@ -3,6 +3,7 @@
   "pages": [
     "number-of-islands",
     "max-area-of-island",
-    "course-schedule"
+    "course-schedule",
+    "rotting-oranges"
   ]
 }
