@@ -7,6 +7,7 @@ import {
   type SortingState,
   type ColumnFiltersState,
   columnFilteringFeature,
+  columnVisibilityFeature,
   createFilteredRowModel,
   createSortedRowModel,
   filterFn_equalsString,
@@ -30,6 +31,7 @@ export interface Problem {
 
 const problemTableFeatures = tableFeatures({
   columnFilteringFeature,
+  columnVisibilityFeature,
   globalFilteringFeature,
   filteredRowModel: createFilteredRowModel(),
   filterFns: { equalsString: filterFn_equalsString },
@@ -286,7 +288,7 @@ export function ProblemsDataTable({
                   key={row.id}
                   className="border-b border-fd-border/60 last:border-0 hover:bg-fd-muted/30"
                 >
-                  {row.getAllCells().map((cell) => (
+                  {row.getVisibleCells().map((cell) => (
                     <td key={cell.id} className="px-4 py-2.5 align-top">
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </td>
