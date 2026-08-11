@@ -6,11 +6,15 @@ import {
   type ColumnDef,
   type SortingState,
   type ColumnFiltersState,
+  columnFilteringFeature,
+  createFilteredRowModel,
+  createSortedRowModel,
+  filterFn_equalsString,
   flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getSortedRowModel,
-  useReactTable,
+  globalFilteringFeature,
+  rowSortingFeature,
+  tableFeatures,
+  useTable,
 } from '@tanstack/react-table';
 import { ArrowDown, ArrowUp, ChevronsUpDown } from 'lucide-react';
 import { cn } from '@/lib/cn';
@@ -23,6 +27,17 @@ export interface Problem {
   category: string;
   tags: string[];
 }
+
+const problemTableFeatures = tableFeatures({
+  columnFilteringFeature,
+  globalFilteringFeature,
+  filteredRowModel: createFilteredRowModel(),
+  filterFns: { equalsString: filterFn_equalsString },
+  rowSortingFeature,
+  sortedRowModel: createSortedRowModel(),
+});
+
+type ProblemColumnDef = ColumnDef<typeof problemTableFeatures, Problem>;
 
 const difficultyStyles: Record<string, string> = {
   Easy: 'border-emerald-600/30 bg-emerald-600/10 text-emerald-700 dark:text-emerald-400',
@@ -62,8 +77,8 @@ export function ProblemsDataTable({
     return filters;
   }, [difficulty, category]);
 
-  const columns = useMemo<ColumnDef<Problem>[]>(() => {
-    const cols: ColumnDef<Problem>[] = [
+  const columns = useMemo<ProblemColumnDef[]>(() => {
+    const cols: ProblemColumnDef[] = [
       {
         accessorKey: 'id',
         header: '#',
@@ -89,7 +104,7 @@ export function ProblemsDataTable({
         accessorKey: 'difficulty',
         header: 'Difficulty',
         filterFn: 'equalsString',
-        sortingFn: (a, b) =>
+        sortFn: (a, b) =>
           (difficultyRank[a.original.difficulty ?? ''] ?? 99) -
           (difficultyRank[b.original.difficulty ?? ''] ?? 99),
         cell: ({ getValue }) => {
@@ -143,7 +158,8 @@ export function ProblemsDataTable({
     return cols;
   }, [showCategory]);
 
-  const table = useReactTable({
+  const table = useTable({
+    features: problemTableFeatures,
     data,
     columns,
     state: { sorting, globalFilter, columnFilters },
@@ -162,9 +178,6 @@ export function ProblemsDataTable({
         .toLowerCase();
       return haystack.includes(String(value).toLowerCase());
     },
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
   });
 
   const rows = table.getRowModel().rows;
@@ -273,7 +286,7 @@ export function ProblemsDataTable({
                   key={row.id}
                   className="border-b border-fd-border/60 last:border-0 hover:bg-fd-muted/30"
                 >
-                  {row.getVisibleCells().map((cell) => (
+                  {row.getAllCells().map((cell) => (
                     <td key={cell.id} className="px-4 py-2.5 align-top">
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </td>
