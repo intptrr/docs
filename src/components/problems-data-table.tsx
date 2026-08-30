@@ -6,14 +6,27 @@ import {
   type ColumnDef,
   type SortingState,
   type ColumnFiltersState,
+  columnFilteringFeature,
+  createFilteredRowModel,
+  createSortedRowModel,
+  filterFn_equalsString,
   flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getSortedRowModel,
-  useReactTable,
+  globalFilteringFeature,
+  rowSortingFeature,
+  tableFeatures,
+  useTable,
 } from '@tanstack/react-table';
 import { ArrowDown, ArrowUp, ChevronsUpDown } from 'lucide-react';
 import { cn } from '@/lib/cn';
+
+const features = tableFeatures({
+  columnFilteringFeature,
+  globalFilteringFeature,
+  rowSortingFeature,
+  filteredRowModel: createFilteredRowModel(),
+  sortedRowModel: createSortedRowModel(),
+  filterFns: { equalsString: filterFn_equalsString },
+});
 
 export interface Problem {
   id: number;
@@ -62,8 +75,8 @@ export function ProblemsDataTable({
     return filters;
   }, [difficulty, category]);
 
-  const columns = useMemo<ColumnDef<Problem>[]>(() => {
-    const cols: ColumnDef<Problem>[] = [
+  const columns = useMemo<ColumnDef<typeof features, Problem>[]>(() => {
+    const cols: ColumnDef<typeof features, Problem>[] = [
       {
         accessorKey: 'id',
         header: '#',
@@ -89,7 +102,7 @@ export function ProblemsDataTable({
         accessorKey: 'difficulty',
         header: 'Difficulty',
         filterFn: 'equalsString',
-        sortingFn: (a, b) =>
+        sortFn: (a, b) =>
           (difficultyRank[a.original.difficulty ?? ''] ?? 99) -
           (difficultyRank[b.original.difficulty ?? ''] ?? 99),
         cell: ({ getValue }) => {
@@ -143,7 +156,8 @@ export function ProblemsDataTable({
     return cols;
   }, [showCategory]);
 
-  const table = useReactTable({
+  const table = useTable({
+    features,
     data,
     columns,
     state: { sorting, globalFilter, columnFilters },
@@ -162,9 +176,6 @@ export function ProblemsDataTable({
         .toLowerCase();
       return haystack.includes(String(value).toLowerCase());
     },
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
   });
 
   const rows = table.getRowModel().rows;
@@ -273,7 +284,7 @@ export function ProblemsDataTable({
                   key={row.id}
                   className="border-b border-fd-border/60 last:border-0 hover:bg-fd-muted/30"
                 >
-                  {row.getVisibleCells().map((cell) => (
+                  {row.getAllCells().map((cell) => (
                     <td key={cell.id} className="px-4 py-2.5 align-top">
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </td>
