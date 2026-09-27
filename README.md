@@ -13,6 +13,11 @@ pnpm dev
 
 Open <http://localhost:3000>.
 
+`package.json` pins `mdast-util-to-markdown` to `2.1.2` for npm-based Azure
+Static Web Apps/Oryx builds. Remove the override after the upstream
+Fumadocs/markdown stack supports newer releases without MDX stringifier
+recursion during `next build`.
+
 ## Structure
 
 Docs are organized into root sections that appear in the sidebar tabs dropdown:
