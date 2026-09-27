@@ -38,5 +38,8 @@
     "tailwindcss": "^4.3.3",
     "typescript": "^6.0.3",
     "zod": "^4.6.5"
+  },
+  "overrides": {
+    "mdast-util-to-markdown": "2.1.2"
   }
 }
