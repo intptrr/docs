@@ -13,6 +13,13 @@ pnpm dev
 
 Open <http://localhost:3000>.
 
+`package.json` uses npm's `overrides` field to pin
+`mdast-util-to-markdown` to `2.1.2` for npm-based Azure Static Web Apps/Oryx
+builds; local pnpm installs are already pinned by `pnpm-lock.yaml`. Track
+[`mdast-util-to-markdown` releases](https://github.com/syntax-tree/mdast-util-to-markdown/releases)
+and remove the override after the upstream Fumadocs/markdown stack supports
+newer releases without MDX stringifier recursion during `next build`.
+
 ## Structure
 
 Docs are organized into root sections that appear in the sidebar tabs dropdown:
