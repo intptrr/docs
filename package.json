@@ -41,5 +41,6 @@
   },
   "overrides": {
     "mdast-util-to-markdown": "2.1.2"
-  }
+  },
+  "_dependencyOverridesComment": "mdast-util-to-markdown is pinned for Azure Static Web Apps/Oryx npm builds; see README.md."
 }
